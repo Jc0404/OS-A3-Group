@@ -3,7 +3,8 @@
 #include <stdlib.h> /* for malloc */
 #include "mergesort.h"
 
-/* ⭐️Allow the original stubs to coexist with test overrides by guarding the definitions. */
+/* ⭐️Allow the original stubs to coexist with test overrides by guarding the definitions.
+This function will be called by mergesort() and also by parallel_mergesort(). */
 #ifndef MERGESORT_EXTERNAL_MERGE
 void merge(int leftstart, int leftend, int rightstart, int rightend)
 {
@@ -39,7 +40,8 @@ void merge(int leftstart, int leftend, int rightstart, int rightend)
 }
 #endif
 
-/* Same guard for the sequential baseline so unit tests can provide their own version. */
+/* Same guard for the sequential baseline so unit tests can provide their own version. 
+This function will be called by parallel_mergesort() as its base case.*/
 #ifndef MERGESORT_EXTERNAL_MYMERGESORT
 void my_mergesort(int left, int right)
 {

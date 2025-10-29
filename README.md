@@ -1,6 +1,6 @@
 # COMP SCI 3004 OS Assignment 3 Concurrency
 
-- Authors: JiaZhi Chen, Samuel Brown
+- Authors: JiaZhi Chen (a1868575), Samuel Brown (a1833328)
 - Group name: Pair 4
 
 ## Overview
@@ -13,10 +13,12 @@ The parent thread joins both child threads before performing the merge step, ens
 
 ## Manifest
 
-- `mergesort.c` — Contains the parallel recursion (`parallel_mergesort`) and argument builder (`buildArgs`). Stubs for `merge` and `my_mergesort` are ready for teammate completion.
+- `mergesort.c` — Contains the parallel recursion (`parallel_mergesort`) and argument builder (`buildArgs`). `merge` function to be invoked by sort functions to combine the resulting arrays. `my_mergesort` sequential recursive merge sort to be used as fallback for the parallel merge sort.
 - `mergesort.h` — Shared declarations, including `struct argument`, `cutoff`, and the array globals.
-- `test-mergesort.c` — Generates random inputs, times execution, and validates sorted output.
-- `Makefile` — Builds the `test-mergesort` executable with the necessary pthread flags.
+- `test-mergesort.c` — Provided test file. Generates random inputs, times execution, and validates sorted output.
+- `test-merge.c` — Simple test to verify the functionality of the basic merge function. Provides two sorted arrays to be merged.
+- `test-my-mergesort.c` — Based on the concepts employed in the provided test file, generates a random array to be sorted by the non-parallel mergesort function. Reports execution times so results can be compared.
+- `Makefile` — Builds the `test-mergesort`, `test-merge.c` and `test-my-mergesort.c` executables with the necessary pthread flags.
 - `README.md` — This documentation.
 
 ## Building the project
@@ -27,6 +29,20 @@ make
 ```
 
 This will produces the executable `./test-mergesort`.
+
+```bash
+cd comp2002-os-mergesort
+make test-merge
+```
+
+This will produces the executable `./test-merge`. Verifies the operations of the merge function.
+
+```bash
+cd comp2002-os-mergesort
+make test-my-mergesort
+```
+
+This will produces the executable `./test-my-mergesort`. Validates the functionality of the sequential, single threaded merge sort.
 
 ## Features and usage
 
