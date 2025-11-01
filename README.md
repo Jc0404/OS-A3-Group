@@ -82,7 +82,7 @@ Run:
   Result: correctly sorted
   ```
 
-  Demonstrates that the teammate’s `merge` stitches the two halves into a single sorted range.
+  Demonstrates that the `merge` function stitches the two halves into a single sorted range.
 
 - Sequential baseline (`my_mergesort`)
 
@@ -176,8 +176,10 @@ Run:
 
 ## Reflection and Self Assessment
 
-- Key design choice: worker threads free their argument blocks (level>0) while the root context leaves ownership to the caller; this avoids double-free of the initial struct yet still prevents leaks in spawned threads. Joining before merging guarantees sorted halves are finalised, eliminating race conditions.
+- Key design choice: worker threads free their argument blocks (level>0) while the root context leaves ownership to the caller; this avoids double-free of the initial struct yet still prevents leaks in spawned threads. Joining before merging guarantees sorted halves are finalised, eliminating race conditions, specifically preventing an Order Violation Bug.
 - Remaining risk: overall speedup depends on the concrete implementations of `merge`/`my_mergesort` and on runtime scheduling or available CPU cores.
+- Lack of Locks and Semaphores: The code could be more complex, in order to demonstrate the utility of locks and semaphores. However, due to the nature and scope of the task it was deemed more suitable to not employ these methods. Added unnecessary complexity comes with a greater potential for errors, especially so when dealing with mutual exclusion. Thus the approach focused around utilising pthread_join was selected, which enables us to entirely avoid a Deadlock problem. The hierarchical approach taken also removes the potential for a Circular Wait to occur.
+- Reflection: This code effectively demonstrates the key advantages of a multithreaded approach, by directly contrasting it against a single threaded, sequential array sort. Multithreading can provide several challenges to overcome, such as being mindful of critical sections and race conditions. However, depending on the desired application, it can be a truly invaluable tool in ensuring efficiency and timely operations.
 
 ## Sources Used
 
